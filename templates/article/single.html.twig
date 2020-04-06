@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Article: {{ article.title }}{% endblock %}
+
+{% block main %}
+<div class="jumbotron">
+    <h1>{{ article.title }}</h1>
+    <img src="{{ article.cover }}" class="img-fluid" />
+</div>
+<p>{{ article.content }}</p>
+<div><small class="text-muted">Publié le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}</small></div>
+{% endblock %}
