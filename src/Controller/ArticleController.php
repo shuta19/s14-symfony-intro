@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,18 +23,8 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{id<\d+>}", name="article_show")
      */
-    public function show(Request $request, ArticleRepository $articleRepository)
+    public function show(Article $article)
     {
-        // Récupère l'ID demandé par l'utilisateur dans l'URL de la requête
-        $id = $request->attributes->get('id');
-
-        // Récupère l'article avec l'ID désiré dans la base de données
-        $article = $articleRepository->find($id);
-
-        if (is_null($article)) {
-            throw $this->createNotFoundException('Article #' . $id . ' does not exist');
-        }
-
         return $this->render('article/single.html.twig', [
             'article' => $article
         ]);
