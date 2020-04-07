@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -14,10 +15,12 @@ class CategoryController extends AbstractController
     /**
      * @Route("", name="list")
      */
-    public function list()
+    public function list(CategoryRepository $categoryRepository)
     {
-        return $this->render('category/index.html.twig', [
-            'controller_name' => 'CategoryController',
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('category/list.html.twig', [
+            'categories' => $categories,
         ]);
     }
 
