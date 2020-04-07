@@ -1,10 +1,16 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Liste des articles{% endblock %}
+{% block title %}Catégorie: {{ category.name }}{% endblock %}
 
 {% block main %}
-    <div style="display: grid; gap: 2em; grid-template-columns: repeat(2, 1fr);">
-    {% for article in articles %}
+<div class="jumbotron">
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+    <img src="{{ category.image }}" class="img-fluid" alt="Illustration de la catégorie" />
+</div>
+<h2>Liste des articles dans cette catégorie</h2>
+<div style="display: grid; gap: 2em; grid-template-columns: repeat(2, 1fr);">
+    {% for article in category.articles %}
         <div class="card">
             <img src="{{ article.cover }}" class="card-img-top" alt="Image de couverture de l'article {{ article.title }}">
             <div class="card-body">
@@ -20,5 +26,5 @@
             </div>
         </div>
     {% endfor %}
-    </div>
+</div>
 {% endblock %}
