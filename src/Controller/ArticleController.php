@@ -8,20 +8,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @Route("/article", name="article_")
+ */
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/article", name="article_list")
+     * @Route("", name="list")
      */
-    public function list()
+    public function list(ArticleRepository $articleRepository)
     {
-        return $this->render('article/index.html.twig', [
-            'controller_name' => 'pouet',
+        $articles = $articleRepository->findAll();
+
+        return $this->render('article/list.html.twig', [
+            'articles' => $articles,
         ]);
     }
 
     /**
-     * @Route("/article/{id<\d+>}", name="article_show")
+     * @Route("/{id<\d+>}", name="show")
      */
     public function show(Article $article)
     {
