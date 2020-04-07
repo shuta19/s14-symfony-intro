@@ -41,6 +41,12 @@ class Article
      */
     private $cover;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
 
     public function __construct() {
         $this
@@ -110,6 +116,18 @@ class Article
     public function setCover(string $cover): self
     {
         $this->cover = $cover;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
