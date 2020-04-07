@@ -41,6 +41,14 @@ class Article
      */
     private $cover;
 
+
+    public function __construct() {
+        $this
+            ->setCreatedAt(new \DateTime())
+            ->setUpdatedAt(new \DateTime())
+        ;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

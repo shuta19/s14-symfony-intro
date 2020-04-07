@@ -3,6 +3,7 @@
 {% block title %}Liste des articles{% endblock %}
 
 {% block main %}
+    <div style="display: grid; gap: 2em; grid-template-columns: repeat(2, 1fr);">
     {% for article in articles %}
         <div class="card">
             <img src="{{ article.cover }}" class="card-img-top" alt="Image de couverture de l'article {{ article.title }}">
@@ -16,4 +17,5 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
