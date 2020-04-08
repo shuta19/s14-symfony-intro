@@ -13,10 +13,17 @@
                 <a href="{{ path('article_show', {id: article.id}) }}" class="btn btn-primary">En savoir plus</a>
             </div>
             <div class="card-footer">
-                <small>Publié dans
-                    <a href="{{ path('category_show', {id: article.category.id}) }}">{{ article.category.name }}</a>
-                    le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}
-                </small>
+                <p>
+                    <small>
+                        Ecrit par {{ article.author.username }}
+                    </small>
+                </p>
+                <p>
+                    <small>Publié dans
+                        <a href="{{ path('category_show', {id: article.category.id}) }}">{{ article.category.name }}</a>
+                        le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}
+                    </small>
+                </p>
             </div>
         </div>
     {% endfor %}

@@ -8,6 +8,18 @@
     <img src="{{ article.cover }}" class="img-fluid" alt="Illustration de l'article" />
 </div>
 <p>{{ article.content }}</p>
-<div><small class="text-muted">Publié le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}</small></div>
+<div>
+    <p>
+        <small>
+            Ecrit par {{ article.author.username }}
+        </small>
+    </p>
+    <p>
+        <small class="text-muted">Publié dans
+            <a href="{{ path('category_show', {id: article.category.id}) }}">{{ article.category.name }}</a>
+            le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}
+        </small>
+    </p>
+</div>
 <a href="{{ path('article_list') }}" class="btn btn-secondary">Retour</a>
 {% endblock %}
