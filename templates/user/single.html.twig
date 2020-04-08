@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Utilisateur: {{ user.username }}{% endblock %}
+
+{% block main %}
+<h1>{{ user.username }}</h1>
+<ul>
+    <li>E-mail: <a href="mailto:{{ user.email }}">{{ user.email }}</a></li>
+</ul>
+<h2>Liste des articles publiés par cet utilisateur</h2>
+{% include 'partial/article/preview-list.html.twig' %}
+{% endblock %}
