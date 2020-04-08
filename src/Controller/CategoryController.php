@@ -31,6 +31,7 @@ class CategoryController extends AbstractController
     {
         return $this->render('category/single.html.twig', [
             'category' => $category,
+            'articles' => $category->getArticles()
         ]);
     }
 }

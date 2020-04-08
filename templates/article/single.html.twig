@@ -9,17 +9,7 @@
 </div>
 <p>{{ article.content }}</p>
 <div>
-    <p>
-        <small>
-            Ecrit par {{ article.author.username }}
-        </small>
-    </p>
-    <p>
-        <small class="text-muted">Publié dans
-            <a href="{{ path('category_show', {id: article.category.id}) }}">{{ article.category.name }}</a>
-            le {{ article.createdAt|date('Y-m-d H:i:s') }}, dernière mise à jour le {{ article.updatedAt|date('Y-m-d H:i:s') }}
-        </small>
-    </p>
+    {% include 'partial/article/meta.html.twig' %}
 </div>
 <a href="{{ path('article_list') }}" class="btn btn-secondary">Retour</a>
 {% endblock %}
