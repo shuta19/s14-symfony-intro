@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\Article;
+use App\DataFixtures\UserFixtures;
+use App\Repository\UserRepository;
 use App\DataFixtures\CategoryFixtures;
 use App\Repository\CategoryRepository;
 use Doctrine\Persistence\ObjectManager;
@@ -16,8 +18,12 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepository) {
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        UserRepository $userRepository
+    ) {
         $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function load(ObjectManager $manager)
@@ -25,6 +31,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('fr_FR');
 
         $categories = $this->categoryRepository->findAll();
+        $users = $this->userRepository->findAll();
 
         for ($i = 0; $i < self::AMOUNT; $i += 1) {
             $article = new Article();
@@ -39,6 +46,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setCreatedAt($createdAt)
                 ->setUpdatedAt($updatedAt)
                 ->setCategory($categories[rand(0, sizeof($categories) - 1)])
+                ->setAuthor($users[rand(0, sizeof($users) - 1)])
             ;
             
             $manager->persist($article);
@@ -51,6 +59,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     {
         return array(
             CategoryFixtures::class,
+            UserFixtures::class
         );
     }
 }
