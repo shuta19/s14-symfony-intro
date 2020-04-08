@@ -22,10 +22,13 @@
                     <a class="nav-link" href="{{ path('category_list') }}">Catégories</a>
                 </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                <div>
+                    {% if app.user %}
+                        {{ app.user.name }} <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    {% else %}
+                        <a class="btn btn-outline-primary" href={{ path('app_login' )}}>Se connecter</a>
+                    {% endif %}
+                </div>
             </div>
         </nav>
     </header>
