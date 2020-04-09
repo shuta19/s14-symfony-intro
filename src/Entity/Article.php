@@ -54,9 +54,11 @@ class Article
 
 
     public function __construct() {
+        $now = new \DateTime();
+
         $this
-            ->setCreatedAt(new \DateTime())
-            ->setUpdatedAt(new \DateTime())
+            ->setCreatedAt($now)
+            ->setUpdatedAt($now)
         ;
     }
 
