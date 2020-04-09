@@ -3,14 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user", name="user_")
  */
 class UserController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, UrlGeneratorInterface $urlGenerator)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+        $this->urlGenerator = $urlGenerator;
+    }
+
     /**
      * @Route("/{id<\d+>}", name="show")
      */
@@ -20,5 +33,42 @@ class UserController extends AbstractController
             'user' => $user,
             'articles' => $user->getArticles()
         ]);
+    }
+
+    /**
+     * @Route("/edit", methods={"GET"}, name="edit_form")
+     */
+    public function editForm()
+    {
+        $user = $this->getUser();
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/edit", methods={"POST"}, name="process_edit")
+     */
+    public function processEdit(Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $this->getUser();
+
+        $user->setName($request->request->get('name'));
+
+        $newPassword = $request->request->get('password');
+
+        if (!empty($newPassword)) {
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                $newPassword
+            ));
+        }
+
+        $entityManager->persist($user);
+
+        $entityManager->flush();
+
+        return new RedirectResponse($this->urlGenerator->generate('user_show', ['id' => $user->getId()]));
     }
 }

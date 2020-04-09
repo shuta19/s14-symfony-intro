@@ -24,7 +24,8 @@
                 </ul>
                 <div>
                     {% if app.user %}
-                        {{ app.user.name }} <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <a href="{{ path('user_show', {id: app.user.id}) }}">{{ app.user.name }}</a>
+                        <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
                     {% else %}
                         <a class="btn btn-outline-secondary" href={{ path('app_signup' )}}>S'inscrire</a>
                         <a class="btn btn-outline-primary" href={{ path('app_login' )}}>Se connecter</a>
