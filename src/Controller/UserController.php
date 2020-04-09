@@ -42,6 +42,10 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
+        if (is_null($user)) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour voir cette page');
+        }
+
         return $this->render('user/edit.html.twig', [
             'user' => $user
         ]);
@@ -53,6 +57,10 @@ class UserController extends AbstractController
     public function processEdit(Request $request, EntityManagerInterface $entityManager)
     {
         $user = $this->getUser();
+
+        if (is_null($user)) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour voir cette page');
+        }
 
         $user->setName($request->request->get('name'));
 
