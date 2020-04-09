@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Publier des contenus{% endblock %}
+
+{% block main %}
+<h1>Publier des contenus</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in app.user.articles %}
+            <tr>
+                <th scope="row">{{ article.id }}</th>
+                <td>
+                    <a href="{{ path('article_show', {id: article.id}) }}">
+                        {{ article.title }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('article_edit_form', {id: article.id}) }}" class="btn btn-primary btn-sm">Modifier</a>
+                </td>
+                <td>
+                    <form method="post" action="{{ path('article_delete', {id: article.id}) }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ path('article_new_form') }}" class="btn btn-success">
+    Créer un nouvel article
+</a>
+{% endblock %}

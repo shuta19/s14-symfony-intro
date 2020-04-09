@@ -79,4 +79,12 @@ class UserController extends AbstractController
 
         return new RedirectResponse($this->urlGenerator->generate('user_show', ['id' => $user->getId()]));
     }
+
+    /**
+     * @Route("/publish", name="publish")
+     */
+    public function publish()
+    {
+        return $this->render('user/publish.html.twig');
+    }
 }

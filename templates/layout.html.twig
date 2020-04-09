@@ -25,6 +25,7 @@
                 <div>
                     {% if app.user %}
                         <a href="{{ path('user_show', {id: app.user.id}) }}">{{ app.user.name }}</a>
+                        <a class="btn btn-outline-success" href="{{ path('user_publish') }}">Publier</a>
                         <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
                     {% else %}
                         <a class="btn btn-outline-secondary" href={{ path('app_signup' )}}>S'inscrire</a>

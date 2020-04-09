@@ -47,7 +47,8 @@ class ArticleController extends AbstractController
         $categories = $categoryRepository->findAll();
 
         return $this->render('article/edit.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'article' => null
         ]);
     }
 
@@ -78,5 +79,61 @@ class ArticleController extends AbstractController
         $entityManager->flush();
         
         return new RedirectResponse($urlGenerator->generate('article_show', ['id' => $article->getId()]));
+    }
+
+    /**
+     * @Route("/{id<\d+>}/edit", methods={"GET"}, name="edit_form")
+     */
+    public function editForm(Article $article, CategoryRepository $categoryRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('article/edit.html.twig', [
+            'categories' => $categories,
+            'article' => $article
+        ]);
+    }
+
+    /**
+     * @Route("/{id<\d+>}/edit", methods={"POST"}, name="process_edit")
+     */
+    public function processEdit(
+        Article $article,
+        Request $request,
+        CategoryRepository $categoryRepository,
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $urlGenerator
+    )
+    {
+        $category = $categoryRepository->find($request->request->get('category'));
+
+        $article
+            ->setTitle($request->request->get('title'))
+            ->setCover($request->request->get('cover'))
+            ->setContent($request->request->get('content'))
+            ->setCategory($category)
+        ;
+
+        $entityManager->persist($article);
+
+        $entityManager->flush();
+        
+        return new RedirectResponse($urlGenerator->generate('article_show', ['id' => $article->getId()]));
+    }
+
+    /**
+     * @Route("/{id<\d+>}/delete", methods={"POST"}, name="delete")
+     */
+    public function delete(
+        Article $article,
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $urlGenerator
+    )
+    {
+        $entityManager->remove($article);
+
+        $entityManager->flush();
+
+        return new RedirectResponse($urlGenerator->generate('user_publish'));
     }
 }
