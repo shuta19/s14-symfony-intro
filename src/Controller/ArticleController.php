@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/article", name="article_")
+ *
  */
 class ArticleController extends AbstractController
 {
